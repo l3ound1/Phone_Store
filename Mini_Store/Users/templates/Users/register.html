@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <style>
+      body {
+        background: linear-gradient(135deg,rgb(255, 255, 255) 0%,rgb(0, 0, 0) 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .card {
+        border: none;
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.15);
+        background-color: #fff;
+        padding: 2rem;
+        max-width: 400px;
+        width: 100%;
+      }
+      h2 {
+        font-weight: 700;
+        color: #343a40;
+        letter-spacing: 0.1em;
+        margin-bottom: 1.5rem;
+      }
+      form .form-control {
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s ease;
+      }
+
+      button.btn-dark {
+        background-color:rgb(203, 231,241);
+        border: none;
+        font-weight: 600;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s ease;
+      }
+      button.btn-dark:hover {
+        background-color:rgb(203, 231,241);
+      }
+      p.text-center {
+        font-size: 0.9rem;
+        color: #6c757d;
+      }
+      p.text-center a {
+        color:rgb(40, 125, 253);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      p.text-center a:hover {
+        color:rgb(40, 125, 253);
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card shadow">
+      <h2 class="text-center text-uppercase">Регистрация</h2>
+      <form method="POST" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-dark w-100 text-uppercase mt-3">Войти</button>
+      </form>
+      <p class="mt-4 text-center">
+        Уже есть аккаунт? <a href="{% url 'Users:login' %}">Войти</a>
+      </p>
+    </div>
+  </body>
+</html>
