@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
+      
     
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <!-- script
@@ -114,18 +115,6 @@
             <li class="cat-list-item">
               <a href="#" title="Headphones">Наушники</a>
             </li>
-            <li class="cat-list-item">
-              <a href="#" title="Accessories">Аксессуары</a>
-            </li>
-            <li class="cat-list-item">
-              <a href="#" title="Monitors">Мониторы</a>
-            </li>
-            <li class="cat-list-item">
-              <a href="#" title="Speakers">Колонки</a>
-            </li>
-            <li class="cat-list-item">
-              <a href="#" title="Memory Cards">Карты памяти</a>
-            </li>
           </ul>
 
         </div>
@@ -152,7 +141,7 @@
             <div class="offcanvas-body">
               <ul id="navbar" class="navbar-nav text-uppercase justify-content-end align-items-center flex-grow-1 pe-3">
                 <li class="nav-item">
-                  <a class="nav-link me-4 active" href="#billboard">Домой</a>
+                  <a class="nav-link me-4 active" href={% url  'main:index' %}>Домой</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link me-4" href="#company-services">Услуги</a>
@@ -167,7 +156,7 @@
                       <a href="about.html" class="dropdown-item">О нас</a>
                     </li>
                     <li>
-                      <a href="shop.html" class="dropdown-item">Магазин</a>
+                      <a href={% url 'Catalog:list_product'%}  class="dropdown-item">Магазин</a>
                     </li>
                     <li>
                       <a href="cart.html" class="dropdown-item">Корзина</a>
@@ -177,6 +166,14 @@
                     </li>
                   </ul>
                 </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href={% url  'main:index' %}>{{user.name}} {{user.fullname}}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href={% url  'Users:logout' %}>Выйти</a>
+                </li>
+                {% endif%}
                 <li class="nav-item">
                   <div class="user-items ps-5">
                     <ul class="d-flex justify-content-end list-unstyled">
@@ -187,13 +184,15 @@
                           </svg>
                         </a>
                       </li>
+                      {% if  user.is_authenticated == False%}
                       <li class="pe-3">
-                        <a href="#">
+                        <a href="{% url  'Users:login' %}">
                           <svg class="user">
                             <use xlink:href="#user"></use>
                           </svg>
                         </a>
                       </li>
+                      {% endif %}
                       <li>
                         <a href="cart.html">
                           <svg class="cart">
@@ -218,7 +217,7 @@
                 <div class="col-md-6">
                   <div class="banner-content">
                     <h1 class="display-2 text-uppercase text-dark pb-5">Покупай телефоны легко и быстро!</h1>
-                    <a href="shop.html" class="btn btn-medium btn-dark text-uppercase btn-rounded-none">Каталог магазина</a>
+                    <a href={% url 'Catalog:list_product'%} class="btn btn-medium btn-dark text-uppercase btn-rounded-none">Каталог магазина</a>
                   </div>
                 </div>
                 <div class="col-md-5">
@@ -293,112 +292,86 @@
       <div class="display-header d-flex justify-content-between pb-3">
         <h2 class="display-7 text-dark text-uppercase">Мобильные продукты</h2>
         <div class="btn-right">
-          <a href="shop.html" class="btn btn-medium btn-normal text-uppercase">Весь каталог</a>
+          <a href="{% url 'Catalog:list_product' %}" class="btn btn-medium btn-normal text-uppercase">Весь каталог</a>
         </div>
       </div>
 
-      <div class="swiper product-swiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item1.jpg' %}" alt="product-item" class="img-fluid" />
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину
-                    <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
-                  </a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase"><a href="#">Iphone 10</a></h3>
-                <span class="item-price text-primary">30.000₽</span>
-              </div>
+      <div class="d-flex gap-3 overflow-auto pb-3">
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item1.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase"><a href="#">Iphone 10</a></h3>
+            <span class="item-price text-primary">30.000₽</span>
+          </div>
+        </div>
 
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item2.jpg' %}" alt="product-item" class="img-fluid" />
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину
-                    <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
-                  </a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase"><a href="#">Iphone 11</a></h3>
-                <span class="item-price text-primary">40.000₽</span>
-              </div>
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item2.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase"><a href="#">Iphone 11</a></h3>
+            <span class="item-price text-primary">40.000₽</span>
+          </div>
+        </div>
 
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item3.jpg' %}" alt="product-item" class="img-fluid" />
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину
-                    <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
-                  </a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase"><a href="#">Iphone 8</a></h3>
-                <span class="item-price text-primary">35.000₽</span>
-              </div>
+
+
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item4.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase"><a href="#">Iphone 13</a></h3>
+            <span class="item-price text-primary">80.000₽</span>
+          </div>
+        </div>
 
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item4.jpg' %}" alt="product-item" class="img-fluid" />
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину
-                    <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
-                  </a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase"><a href="#">Iphone 13</a></h3>
-                <span class="item-price text-primary">80.000₽</span>
-              </div>
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item5.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
-
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item5.jpg' %}" alt="product-item" class="img-fluid" />
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину
-                    <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
-                  </a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase"><a href="#">Iphone 12</a></h3>
-                <span class="item-price text-primary">100.000₽</span>
-              </div>
-            </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase"><a href="#">Iphone 12</a></h3>
+            <span class="item-price text-primary">100.000₽</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="swiper-pagination position-absolute text-center"></div>
 </section>
+
+
 
 <!-- Аналогично для Smart Watches -->
 
@@ -408,106 +381,95 @@
       <div class="display-header d-flex justify-content-between pb-3">
         <h2 class="display-7 text-dark text-uppercase">Smart Watches</h2>
         <div class="btn-right">
-          <a href="shop.html" class="btn btn-medium btn-normal text-uppercase">Весь каталог</a>
+          <a href="{% url 'Catalog:list_product' %}" class="btn btn-medium btn-normal text-uppercase">Весь каталог</a>
         </div>
       </div>
-      <div class="swiper product-watch-swiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item6.jpg' %}" alt="product-item" class="img-fluid">
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину<svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg></a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase">
-                  <a href="#">Pink watch</a>
-                </h3>
-                <span class="item-price text-primary">30.000₽</span>
-              </div>
+
+      <div class="d-flex gap-3 overflow-auto pb-3">
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item6.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">
+                Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item7.jpg' %}" alt="product-item" class="img-fluid">
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину<svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg></a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase">
-                  <a href="#">Heavy watch</a>
-                </h3>
-                <span class="item-price text-primary">50.000₽</span>
-              </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase">
+              <a href="#">Pink watch</a>
+            </h3>
+            <span class="item-price text-primary">30.000₽</span>
+          </div>
+        </div>
+
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item8.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">
+                Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item8.jpg' %}" alt="product-item" class="img-fluid">
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину<svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg></a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase">
-                  <a href="#">Spotted watch</a>
-                </h3>
-                <span class="item-price text-primary">60.000₽</span>
-              </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase">
+              <a href="#">Spotted watch</a>
+            </h3>
+            <span class="item-price text-primary">60.000₽</span>
+          </div>
+        </div>
+
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item9.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">
+                Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item9.jpg' %}" alt="product-item" class="img-fluid">
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину<svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg></a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                <h3 class="card-title text-uppercase">
-                  <a href="#">Black watch</a>
-                </h3>
-                <span class="item-price text-primary">70.000₽</span>
-              </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase">
+              <a href="#">Black watch</a>
+            </h3>
+            <span class="item-price text-primary">70.000₽</span>
+          </div>
+        </div>
+
+        <div class="product-card position-relative" style="min-width: 250px;">
+          <div class="image-holder">
+            <img src="{% static 'images/product-item10.jpg' %}" alt="product-item" class="img-fluid" />
+          </div>
+          <div class="cart-concern position-absolute">
+            <div class="cart-button d-flex">
+              <a href="#" class="btn btn-medium btn-black">
+                Добавить в корзину
+                <svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg>
+              </a>
             </div>
           </div>
-          <div class="swiper-slide">
-            <div class="product-card position-relative">
-              <div class="image-holder">
-                <img src="{% static 'images/product-item10.jpg' %}" alt="product-item" class="img-fluid">
-              </div>
-              <div class="cart-concern position-absolute">
-                <div class="cart-button d-flex">
-                  <a href="#" class="btn btn-medium btn-black">Добавить в корзину<svg class="cart-outline"><use xlink:href="#cart-outline"></use></svg></a>
-                </div>
-              </div>
-              <div class="card-detail d-flex justify-content-between pt-3">
-                <h3 class="card-title text-uppercase">
-                  <a href="#">Black watch</a>
-                </h3>
-                <span class="item-price text-primary">90.000₽</span>
-              </div>
-            </div>
+          <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
+            <h3 class="card-title text-uppercase">
+              <a href="#">Black watch</a>
+            </h3>
+            <span class="item-price text-primary">90.000₽</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
     <footer id="footer" class="overflow-hidden">
       <div class="container">
         <div class="row">
@@ -578,16 +540,6 @@
     <script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-      <script>
-      const swiper = new Swiper('.swiper', {
-        loop: true,
-        slidesPerView: 1,
-        spaceBetween: 20,
-        breakpoints: {
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        },
-      });
-    </script>
+    
   </body>
 </html>

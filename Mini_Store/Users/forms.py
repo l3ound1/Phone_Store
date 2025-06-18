@@ -8,12 +8,11 @@ from django.contrib.auth import authenticate
 class User_Add(UserCreationForm):
     name = forms.CharField(label="Имя", widget=forms.TextInput(attrs={'class': 'form-input'}))
     fullname = forms.CharField(label="Фамилия", widget=forms.TextInput(attrs={'class': 'form-input'}))
-    patronymic = forms.CharField(label="Отчество", widget=forms.TextInput(attrs={'class': 'form-input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     class Meta:
         model = get_user_model()
-        fields = ['username','email',"name","fullname","patronymic",'password1', 'password2']
+        fields = ['username','email',"name","fullname",'password1', 'password2']
         labels = {
             "email":"Е-майл",
             "username":"Имя пользователя"

@@ -69,7 +69,7 @@
       var swiper = new Swiper(".product-swiper", {
         slidesPerView: 4,
         spaceBetween: 10,
-        pagination: {
+                pagination: {
           el: "#mobile-products .swiper-pagination",
           clickable: true,
         },
@@ -114,4 +114,7 @@
 
     }); // End of a document ready
 
-})(jQuery);
+    
+
+})
+(jQuery);

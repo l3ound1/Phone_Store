@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from Users.forms import User_Add, Login_Users
+from users.forms import User_Add, Login_Users
 
 
 # Create your views here.
